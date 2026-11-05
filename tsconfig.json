@@ -1,0 +1,12 @@
+{
+	"extends": "$app/tsconfig",
+	"compilerOptions": {
+		"strict": true,
+		// Generated worker types reference the built worker (JS); don't type-check build output.
+		"checkJs": false,
+		"types": ["$app/types", "./worker-configuration.d.ts"]
+	},
+	"include": ["src", "vite.config.ts", "prettier.config.js"],
+	// Unit tests run under `bun test` and use Bun's own types.
+	"exclude": ["src/**/*.test.ts"]
+}

@@ -1,0 +1,44 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "portal-purbonegaran",
+	"compatibility_date": "2026-11-05",
+	"compatibility_flags": ["nodejs_als"],
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	// Main address. workers.dev stays on as a fallback, but some ISPs (e.g. XL/Axis)
+	// block *.workers.dev at the DNS level, so share the custom domain with warga.
+	"routes": [
+		{ "pattern": "purbonegaran.my.id", "custom_domain": true },
+		{ "pattern": "www.purbonegaran.my.id", "custom_domain": true }
+	],
+	"workers_dev": true,
+	"preview_urls": true,
+	// Workers Caching: responses with `Cache-Control: public` (photos, public API)
+	// are served from Cloudflare's cache without running the Worker.
+	"cache": { "enabled": true, "cross_version_cache": true },
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"traces": { "enabled": true }
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "portal-purbonegaran",
+			"database_id": "59fcb717-abd9-4092-af64-2ba3e1cc5980",
+			"migrations_dir": "migrations"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "portal-purbonegaran-media"
+		}
+	],
+	"vars": {
+		"SITE_URL": "https://purbonegaran.my.id"
+	}
+}

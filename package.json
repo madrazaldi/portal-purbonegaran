@@ -1,0 +1,42 @@
+{
+	"name": "portal-kampung",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
+	"scripts": {
+		"dev": "vite dev",
+		"build": "wrangler types --include-runtime=false --check && vite build",
+		"preview": "bun run build && wrangler dev --port 4173",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "wrangler types --include-runtime=false --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check .",
+		"format": "prettier --write .",
+		"gen": "wrangler types --include-runtime=false",
+		"test": "bun test src",
+		"db:migrate:local": "wrangler d1 migrations apply portal-purbonegaran --local",
+		"db:migrate:remote": "wrangler d1 migrations apply portal-purbonegaran --remote",
+		"create-admin": "bun scripts/create-admin.ts",
+		"deploy": "bun run build && wrangler d1 migrations apply portal-purbonegaran --remote && wrangler deploy"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^5.20261104.1",
+		"@sveltejs/adapter-cloudflare": "^8.0.0",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.1.0",
+		"svelte": "^5.57.2",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.0",
+		"wrangler": "^4.97.0"
+	},
+	"dependencies": {
+		"hono": "4.13.16"
+	}
+}
