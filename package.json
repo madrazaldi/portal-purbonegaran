@@ -9,10 +9,10 @@
 	},
 	"scripts": {
 		"dev": "vite dev",
-		"build": "wrangler types --include-runtime=false --check && vite build",
+		"build": "wrangler types --include-runtime=false && vite build",
 		"preview": "bun run build && wrangler dev --port 4173",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "wrangler types --include-runtime=false --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"prepare": "(wrangler types --include-runtime=false && svelte-kit sync) || echo ''",
+		"check": "wrangler types --include-runtime=false && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
