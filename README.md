@@ -105,7 +105,8 @@ chatbot and Posyandu reminders).
 
 - Photos: hard cap of **8 GB** total (R2 free tier is 10 GB) and **20,000 uploads/month**
   (R2 free tier is 1M write ops; each upload = 2 writes). Usage is shown in Admin → Galeri.
-- Photos are served with `cdn-cache-control: max-age=86400` and Workers Caching, so R2 reads stay
+- Photos are served with `cdn-cache-control: max-age=86400` and Workers Caching (cache key = path,
+  not host; each deploy starts a fresh cache), so R2 reads stay
   far below the 10M/month free tier, and a deleted photo leaves the edge cache within a day.
 - D1 free tier: 5M row reads / 100k row writes per day — far above expected use.
 

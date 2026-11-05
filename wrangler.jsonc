@@ -17,8 +17,9 @@
 	"workers_dev": true,
 	"preview_urls": true,
 	// Workers Caching: responses with `Cache-Control: public` (photos, public API)
-	// are served from Cloudflare's cache without running the Worker.
-	"cache": { "enabled": true, "cross_version_cache": true },
+	// are served from Cloudflare's cache without running the Worker. The cache key is
+	// the path (not the host), and each deploy starts with a fresh cache.
+	"cache": { "enabled": true, "cross_version_cache": false },
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,

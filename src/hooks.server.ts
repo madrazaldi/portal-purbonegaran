@@ -3,13 +3,15 @@ import { env } from 'cloudflare:workers';
 import { SESSION_COOKIE, userFromToken } from '#lib/server/auth.js';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	// www.purbonegaran.my.id → purbonegaran.my.id (one canonical host for SEO and cookies).
+	// www.purbonegaran.my.id → purbonegaran.my.id. A zone Redirect Rule normally handles this
+	// before the Worker runs; this is the fallback. It must never be cached: Workers Caching
+	// keys by path, not host, so a cached redirect would also be served on the bare domain.
 	if (event.url.hostname.startsWith('www.')) {
 		const target = new URL(event.url);
 		target.hostname = target.hostname.slice(4);
 		return new Response(null, {
 			status: 301,
-			headers: { location: target.href, 'cache-control': 'public, max-age=86400' }
+			headers: { location: target.href, 'cache-control': 'no-store' }
 		});
 	}
 
