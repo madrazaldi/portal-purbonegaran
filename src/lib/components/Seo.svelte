@@ -19,8 +19,10 @@
 
 	const siteName = $derived((page.data as { site?: { siteName?: string } }).site?.siteName ?? 'Kampung Purbonegaran');
 	const fullTitle = $derived(title === siteName ? title : `${title} · ${siteName}`);
-	const canonical = $derived(`${page.url.origin}${page.url.pathname}`);
-	const imageUrl = $derived(image ? new URL(image, page.url.origin).href : null);
+	// Canonical host comes from SITE_URL (layout data), so the workers.dev copy points to the domain.
+	const origin = $derived((page.data as { origin?: string }).origin ?? page.url.origin);
+	const canonical = $derived(`${origin}${page.url.pathname}`);
+	const imageUrl = $derived(image ? new URL(image, origin).href : null);
 	// Escape "<" so the JSON can never close the script tag.
 	const ld = $derived(jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null);
 </script>

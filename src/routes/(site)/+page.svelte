@@ -22,7 +22,7 @@
 		'@type': 'Place',
 		name: `${site.siteName} RW 11`,
 		description: site.welcomeText,
-		url: page.url.origin,
+		url: page.data.origin,
 		address: {
 			'@type': 'PostalAddress',
 			streetAddress: site.address,

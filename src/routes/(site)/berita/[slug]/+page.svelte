@@ -13,14 +13,14 @@
 	let { data }: PageProps = $props();
 	const post = $derived(data.post);
 	const coverIsAlsoInGallery = $derived(post.media.length === 1 && post.media[0].id === post.cover?.id);
-	const shareUrl = $derived(`${page.url.origin}/berita/${post.slug}`);
+	const shareUrl = $derived(`${page.data.origin}/berita/${post.slug}`);
 
 	const jsonLd = $derived({
 		'@context': 'https://schema.org',
 		'@type': 'NewsArticle',
 		headline: post.title,
 		datePublished: post.publishedAt,
-		image: post.cover?.url ? [new URL(post.cover.url, page.url.origin).href] : undefined,
+		image: post.cover?.url ? [new URL(post.cover.url, page.data.origin).href] : undefined,
 		author: { '@type': 'Organization', name: data.site.siteName },
 		publisher: { '@type': 'Organization', name: data.site.siteName }
 	});
